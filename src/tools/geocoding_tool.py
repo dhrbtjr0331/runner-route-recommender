@@ -71,8 +71,26 @@ def snap_point_to_node(G: nx.MultiDiGraph, lat: float, lon: float) -> int:
     Returns:
         Nearest node ID.
     """
-    nearest_node = ox.distance.nearest_nodes(G, X=lon, Y=lat)
-    return int(nearest_node)
+    if "crs" not in G.graph:
+        G.graph["crs"] = "epsg:4326"
+
+    try:
+        nearest_node = ox.distance.nearest_nodes(G, X=lon, Y=lat)
+        return int(nearest_node)
+    except Exception:
+        # Fallback to direct Euclidean/Haversine scan if BallTree/scikit-learn is missing
+        best_node = None
+        min_sq_dist = float("inf")
+        for n, data in G.nodes(data=True):
+            nx_lon = data.get("x", 0.0)
+            ny_lat = data.get("y", 0.0)
+            sq_d = (ny_lat - lat) ** 2 + (nx_lon - lon) ** 2
+            if sq_d < min_sq_dist:
+                min_sq_dist = sq_d
+                best_node = n
+        if best_node is not None:
+            return int(best_node)
+        return list(G.nodes)[0]
 
 
 def haversine_distance_km(coord1: Tuple[float, float], coord2: Tuple[float, float]) -> float:
