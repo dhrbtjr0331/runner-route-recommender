@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rrr_agent"
+version = "0.1.0"
+description = "Runnable Route Recommender (RRR) Agent for micro1 Hackathon"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "osmnx>=1.9.0",
+    "networkx>=3.0",
+    "shapely>=2.0.0",
+    "geopandas>=0.14.0",
+    "scikit-learn>=1.3.0",
+    "scipy>=1.11.0",
+    "requests>=2.31.0",
+    "geopy>=2.4.0",
+    "pydantic>=2.0.0",
+    "folium>=0.16.0",
+    "matplotlib>=3.7.0",
+    "gpxpy>=1.6.0",
+    "python-dotenv>=1.0.0",
+    "pytest>=8.0.0",
+    "google-genai>=0.1.1"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+

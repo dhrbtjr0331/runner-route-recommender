@@ -11,10 +11,13 @@ CACHE_DIR = DATA_DIR / "cache"
 OSM_CACHE_DIR = CACHE_DIR / "osm"
 ELEVATION_CACHE_DIR = CACHE_DIR / "elevation"
 OUTPUT_DIR = DATA_DIR / "sample_outputs"
+MPL_CACHE_DIR = CACHE_DIR / "mpl"
 
 # Ensure directories exist
-for p in [DATA_DIR, CACHE_DIR, OSM_CACHE_DIR, ELEVATION_CACHE_DIR, OUTPUT_DIR]:
+for p in [DATA_DIR, CACHE_DIR, OSM_CACHE_DIR, ELEVATION_CACHE_DIR, OUTPUT_DIR, MPL_CACHE_DIR]:
     p.mkdir(parents=True, exist_ok=True)
+
+os.environ["MPLCONFIGDIR"] = str(MPL_CACHE_DIR)
 
 # APIs
 OPEN_METEO_ELEVATION_URL = "https://api.open-meteo.com/v1/elevation"
